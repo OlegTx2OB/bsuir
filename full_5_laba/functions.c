@@ -1,7 +1,5 @@
 #include "functions.h"
 
-#define MAX_STR_LEN 60
-
 int var(char c)
 {
     if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) return 1;
@@ -34,46 +32,42 @@ void check_2_last_elements(char* expression)
         exit(-1);
     }
 }
-void check_ratio_of_signs_and_vars_numbers(int signs_count, int vars_numbers_count)
-{
-    if(signs_count != vars_numbers_count - 1)
-    {
-        printf(" ! Ratio of signs and vars/numbers isn't correct");
-        exit(-1);
-    }
-}
-void transformation(stack* stack1, char* expression, char* new_expression)
+
+void transformation(char* expression, char* new_expression)
 {
     check_first_element( expression[0]);
     check_2_last_elements(expression);
 
+    list *sample;
     int new_expression_pos = 0;
 
-    int signs_count = 0;
-    int vars_numbers_count = 0;
+    char* secret_developments_of_the_c_language = malloc(0);
+    free(secret_developments_of_the_c_language);
 
     for (int i = 0; expression[i] != '\n' && expression[i] != '\0'; i++)
     {
         if (sign(expression[i]))
         {
-            push(stack1, expression[i]);
-            signs_count++;
+            push(&sample, expression[i]);
         }
         else if (var(expression[i]) || number(expression[i]))
         {
             new_expression[new_expression_pos] = expression[i];
             new_expression_pos++;
-            vars_numbers_count++;
 
-            (*stack1).sign_status[(*stack1).size - 1]++;
-            for (int j = (*stack1).size - 1; j >= 0; j--)
+            sample->sign_status++;
+            int checkbox = 0;
+            while(checkbox == 0)
             {
-                if(peek_status(*stack1, j) == 2)
+                if(peek_status(sample) == 2)
                 {
-                    new_expression[new_expression_pos] = pop(stack1);
+                    new_expression[new_expression_pos] = pop(&sample);
                     new_expression_pos++;
-                    if((*stack1).size != 0) (*stack1).sign_status[(*stack1).size - 1]++;
+
+                    if(sample != NULL)sample->sign_status++;
                 }
+                if(sample == NULL) checkbox = 1;
+                else if(peek_status(sample) != 2) checkbox = 1;
             }
         }
         else
@@ -82,17 +76,22 @@ void transformation(stack* stack1, char* expression, char* new_expression)
             exit(-1);
         }
     }
-    new_expression[new_expression_pos] = '\n';
-    new_expression_pos++;
-    new_expression[new_expression_pos] = '\0';
-    //new_expression_pos++;
-
-    check_ratio_of_signs_and_vars_numbers(signs_count, vars_numbers_count);
 }
-void input(char* expression)
+char* input(int* size)
 {
+    char* expression = malloc(0);
     printf("\n * Enter your expression:\n");
-    fgets(expression, MAX_STR_LEN, stdin);
+
+    char symbol = 0;
+    (*size) = 1;
+    for(; symbol != '\n'; (*size)++)
+    {
+        symbol = getchar();
+        expression = realloc(expression, (*size));
+        expression[*size - 1] = symbol;
+    }
+    expression[*size-1] = '\0';
+    return expression;
 }
 void output(char* new_expression)
 {
