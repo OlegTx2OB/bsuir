@@ -32,17 +32,36 @@ void check_2_last_elements(char* expression)
         exit(-1);
     }
 }
+void check_ratio_of_signs_and_vars_numbers(char *expression)
+{
+    int signs_count = 0;
+    int vars_numbers_count = 0;
+
+    for(int i = 0; expression[i] != '\n' && expression[i] != '\0'; i++)
+    {
+        if(sign(expression[i])) signs_count++;
+        else if(var(expression[i]) || number(expression[i])) vars_numbers_count++;
+        else
+        {
+            printf(" ! Some element isn't sign/var/number\n");
+            exit(-1);
+        }
+    }
+    if(signs_count != vars_numbers_count - 1)
+    {
+        printf(" ! Ratio of signs and vars/numbers isn't correct\n");
+        exit(-1);
+    }
+}
 
 void transformation(char* expression, char* new_expression)
 {
     check_first_element( expression[0]);
     check_2_last_elements(expression);
+    check_ratio_of_signs_and_vars_numbers(expression);
 
-    list *sample;
+    list *sample = NULL;
     int new_expression_pos = 0;
-
-    char* secret_developments_of_the_c_language = malloc(0);
-    free(secret_developments_of_the_c_language);
 
     for (int i = 0; expression[i] != '\n' && expression[i] != '\0'; i++)
     {
@@ -50,7 +69,7 @@ void transformation(char* expression, char* new_expression)
         {
             push(&sample, expression[i]);
         }
-        else if (var(expression[i]) || number(expression[i]))
+        else
         {
             new_expression[new_expression_pos] = expression[i];
             new_expression_pos++;
@@ -69,11 +88,6 @@ void transformation(char* expression, char* new_expression)
                 if(sample == NULL) checkbox = 1;
                 else if(peek_status(sample) != 2) checkbox = 1;
             }
-        }
-        else
-        {
-            printf(" ! Some element isn't sign/var/number\n");
-            exit(-1);
         }
     }
 }
