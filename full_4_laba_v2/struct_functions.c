@@ -1,29 +1,32 @@
 #include "struct_functions.h"
 #include "functions.h"
 
-void add(school* p, int size)
+school* new_pupil()
 {
+    school* new_p = malloc(sizeof(school));
+    new_p->next = NULL;
+    new_p->prev = NULL;
 //id
-    p[size - 1].id = time(NULL);
+    new_p->id = time(NULL);
 //full name
     printf(" * Enter full name of this child (to 63 symbols) (Please, write in correct form):");
-    fgets(p[size - 1].full_name, 64, stdin);
+    fgets(new_p->full_name, 64, stdin);
     rewind(stdin);
 //age
     printf(" * Enter age of this child (from 0 to to 100):");
-    p[size - 1].age = getshort(0, 100);
+    new_p->age = getshort(0, 100);
 //choose class
     printf(" * Enter class of this child:");
-    p[size-1].cl1.i = getshort(1, 4);
+    new_p->cl1.i = getshort(1, 4);
 //sizeof choosen class
-    size_t class_size = -sizeof(int);                                               //todo size_t //MINUS?
-    if(p[size-1].cl1.i == CLASS1)class_size += sizeof(p[size-1].cl1);
-    else if(p[size-1].cl1.i == CLASS2)class_size += sizeof(p[size-1].cl2);
-    else if(p[size-1].cl1.i == CLASS3)class_size += sizeof(p[size-1].cl3);
-    else if(p[size-1].cl1.i == CLASS4)class_size += sizeof(p[size-1].cl4);
+    size_t class_size = -sizeof(int);
+    if(new_p->cl1.i == CLASS1)class_size += sizeof(new_p->cl1);
+    else if(new_p->cl1.i == CLASS2)class_size += sizeof(new_p->cl2);
+    else if(new_p->cl1.i == CLASS3)class_size += sizeof(new_p->cl3);
+    else if(new_p->cl1.i == CLASS4)class_size += sizeof(new_p->cl4);
 
 //input average marks for every subject
-    float* psubject = (float*)((int*)&p[size-1].cl1 + 1);
+    float* psubject = (float*)((int*)&new_p->cl1 + 1);
     for(int i = 0; i < class_size/sizeof(float); i++)
     {
         printf("Enter average mark for the subject: ");
@@ -33,13 +36,25 @@ void add(school* p, int size)
 //char* address
     printf(" * Enter address of this child (to 63 symbols):");
     rewind(stdin);
-    fgets(p[size - 1].address, 64, stdin);
+    fgets(new_p->address, 64, stdin);
     rewind(stdin);
 //telephone
     printf(" * Enter telephone of this child:");
-    p[size - 1].telephone = getlonglong(1, 9223372036854775807);
+    new_p->telephone = getlonglong(1, 9223372036854775807);
+    return new_p;
 }
-void print(school* p, int i)
+
+void add(school** p)
+{
+    school* new_p = new_pupil();
+    if(*p != NULL)
+    {
+        (*p)->next = new_p;
+        new_p->prev = *p;
+    }
+    else *p = new_p;
+}
+void print(school* p)
 {
     printf("    |------------------------------\n"
            "    | 1. id: %d\n"
@@ -49,81 +64,106 @@ void print(school* p, int i)
            "    | 5. average mark: %f\n"
            "    | 6. address: %s"
            "    | 7. telephone: %lld\n"
-           "    |------------------------------\n", p[i].id, p[i].full_name, p[i].age,
-           p[i].cl1.i, ave_mark(p+i), p[i].address, p[i].telephone);
+           "    |------------------------------\n", p->id, p->full_name, p->age,
+           p->cl1.i, ave_mark(p), p->address, p->telephone);
 }
-void update(school* p, int size)
+void update(school** p)
 {
-    unsigned short int id;
     printf(" * Enter id of this pupil: ");
-    while (!scanf("%hd", &id) || id > 65535 || id < 0 || getchar() != '\n')
-    {
-        printf("invalid input\n");
-        rewind(stdin);
+    unsigned short int id = (unsigned short)getlonglong(0, 65535);
+
+    if (p == NULL) {
+        printf("\n * There no one pupil with id.%d\n", id);
+        return;
     }
-    if (size == 0) printf("\n * There no one pupil with id.%d\n", id);
-    for(int i = 0; i < size; i++)
+
+    short check = 0;
+    school* curr = *p;
+    while(curr != NULL)
     {
-        if(id == p[i].id)
+        if(id == curr->id)
         {
-            add(p, i+1);
-            printf("\n * All info about this pupil has been updated.\n"); //there was added new pupil lol
+            school* pr = curr->prev;
+            school* next = curr->next;
+
+            *curr = *new_pupil();
+            printf("\n * All info about this pupil has been updated.\n");
+            check = 1;
             break;
         }
-        else printf("\n * There no one pupil with id.%d\n", id);
-
+        curr = curr->next;
     }
-
+    if(check == 0) printf("\n * There no one pupil with id.%d\n", id);
 }
-void kill(school* p, int* size)
+void kill(school** p)
 {
     printf("\n * Enter id of this pupil: ");
     unsigned short int id = (unsigned short)getlonglong(0, 65535);
-    int kill_num = -1;
-    for(int i = 0; i < (*size); i++) if(id == p[i].id) kill_num = i;
 
-    if(kill_num == -1) printf(" * There no one pupil with id.%d\n", id);
-    else
-    {
-        for (int i = kill_num; i < (*size) - 1; i++) p[i] = p[i + 1];
+    school* to_kill = NULL;
+    school* curr = *p;
+    while(curr != NULL){
+        if(id == curr->id){
+            to_kill = curr;
+            break;
+        }
+        curr = curr->next;
+    }
 
-        (*size)--;
-        realloc(p, (*size) * sizeof(school));
+    if(to_kill == NULL) {
+        printf(" * There no one pupil with id.%d\n", id);
+        return;
+    }
+    else{
+        if(to_kill->next)
+            to_kill->next->prev = to_kill->prev;
+        if(to_kill->prev)
+            to_kill->prev->next = to_kill->next;
+        *p = NULL;
         printf("\n * This pupil has been removed \n");
         fflush(stdin);
     }
 }
-void sort(school* p, int size)
-{
-    if(size < 2) printf(" * too few pupils. Please, try next time\n");
-    else
-    {
-        printf("    |By-what-parameter-do-you-want-to-sort?\n"
-               "    | 1. id          \n"
-               "    | 2. full name   \n"
-               "    | 3. age         \n"
-               "    | 4. class       \n"
-               "    | 5. average mark\n"
-               "    | 6. address     \n"
-               "    | 7. telephone   \n"
-               "    |------------------------------\n");
-        char choose;
-        while (!scanf("%c", &choose) || choose < '1' || choose > '7' || getchar() != '\n')
-        {
-            printf("invalid input\n");
-            rewind(stdin);
-        }
-        insertion_sort(p, size, choose);
-
-        printf(" * Sorting was successful\n");
-    }
-}
+//void sort(school* p) {
+//    if (p == NULL)
+//        return;
+//    school* curr = p->next;
+//    while (curr != NULL) {
+//        school* el = curr;
+//        school* curr_temp = el->prev;
+//        curr = curr->next;
+//
+//        while (curr_temp && el->c1.i > curr_temp->c1.i)
+//            curr_temp = curr_temp->prev;
+//
+//        remove(list, el);
+//        //дальше бога нет
+//
+//        if (!curr_temp) {
+//            list->begin->prev = el;
+//            el->next = list->begin;
+//            list->begin = el;
+//            el->prev = NULL;
+//        }
+//        else if(curr_temp->next) {
+//            curr_temp->next->prev = el;
+//            el->next = curr_temp->next;
+//            el->prev = curr_temp;
+//            curr_temp->next = el;
+//        }
+//        else {
+//            curr_temp->next = el;
+//            el->prev = curr_temp;
+//            list->end = el;
+//            el->next = NULL;
+//        }
+//    }
+//}
 
 float ave_mark(school* p)
 {
-    //enter class num
     float* psubject = (float*)((int*)&p->cl1 + 1);
-    size_t class_size = -sizeof(int);                                           //todo size_t
+    size_t class_size = -sizeof(int);
 
     if(p->cl1.i == CLASS1)class_size += sizeof(p->cl1);
     else if(p->cl1.i == CLASS2)class_size += sizeof(p->cl2);
@@ -137,7 +177,7 @@ float ave_mark(school* p)
     return average_mark;
 }
 
-void retarded(school* p, int size)
+void retarded(school* p)
 {
     printf("\n * Enter minimum of normal gpa :");
     float min_gpa;
@@ -146,7 +186,10 @@ void retarded(school* p, int size)
         printf("invalid input\n");
         rewind(stdin);
     }
-    for(int i = 0; i < size; i++)
-        if(ave_mark(p + i) < min_gpa)
-            print(p, i);
+    school* curr = p;
+    while(curr != NULL){
+        if(ave_mark(curr) < min_gpa)
+            print(p);
+        curr = curr->next;
+    }
 }

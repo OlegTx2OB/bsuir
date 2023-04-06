@@ -30,28 +30,6 @@ long long getlonglong(short lower_bound, long long upper_bound)
     }
     return lld;
 }
-int sort_condition(school bubble, school pj, char choose)
-{
-    if(choose == '1') return (pj.id > bubble.id);
-    else if(choose == '2') return(strcmp(pj.full_name, bubble.full_name) > 0);
-    else if(choose == '3') return(pj.age > bubble.age);
-    else if(choose == '4') return(pj.cl1.i > bubble.cl1.i);
-    else if(choose == '5') return(strcmp(pj.address, bubble.address) > 0);
-    else if(choose == '6') return(pj.telephone > bubble.telephone);
-}
-void insertion_sort(school* p, int size, char choose)
-{
-    for(int m = 0; m < size; m++)
-    {
-        int j;
-        school bubble = p[m];
-        for(j = m - 1; j >= 0 && sort_condition(bubble, p[j], choose); j--)
-        {
-            p[j + 1] = p[j];
-        }
-        p[j + 1] = bubble;
-    }
-}
 void writing_log_by_the_first_parameter(short parameter, unsigned short id, char* full_name, short age, short class,
                                         float av_mark, char* address, long long telephone)
 {

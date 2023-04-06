@@ -10,8 +10,11 @@ enum options
     ADD = 1, PRINT, UPDATE, KILL, SORT, RETARDED, QUIT,
 };
 
-typedef struct
+typedef struct Info
 {
+    struct Info *next;
+    struct Info *prev;
+
     unsigned short int id;
     char full_name[64];
     short int age;
@@ -26,10 +29,10 @@ typedef struct
     long long telephone;
 } school;
 
-void add(school* p,int size);
-void print(school* p, int i);
-void update(school* p, int size);
-void kill(school* p, int* size);
-void sort(school* p, int size);
+void add(school** p);
+void print(school* p);
+void update(school** p);
+void kill(school** p);
+void sort(school* p);
 float ave_mark(school* p);
-void retarded(school* p, int size);
+void retarded(school* p);
