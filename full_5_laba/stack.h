@@ -12,9 +12,9 @@ typedef struct LIST
     char sign;
     int sign_status;
     struct LIST *next;
-}list;
+}stack;
 
-void push(list **head, char sign);
-char pop(list **head);
-int peek_status(list* head);
+void push(stack **head, char sign);
+char pop(stack **head);
+int peek_status(stack* head);
 

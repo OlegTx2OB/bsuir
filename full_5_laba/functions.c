@@ -15,6 +15,7 @@ int sign(char c)
     if (c == '*' || c == '/' || c == '+' || c == '-') return 1;
     return 0;
 }
+
 void check_first_element(char c)
 {
     if(!sign(c))
@@ -60,7 +61,7 @@ void transformation(char* expression, char* new_expression)
     check_2_last_elements(expression);
     check_ratio_of_signs_and_vars_numbers(expression);
 
-    list *sample = NULL;
+    stack *sample = NULL;
     int new_expression_pos = 0;
 
     for (int i = 0; expression[i] != '\n' && expression[i] != '\0'; i++)
@@ -90,6 +91,8 @@ void transformation(char* expression, char* new_expression)
             }
         }
     }
+
+
 }
 char* input(int* size)
 {
