@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "lists_funcs.h"
 #include "funcs.h"
 
@@ -15,7 +16,7 @@ void push(queue** q_head, queue** q_new)
         (*q_head) = (*q_new);
     }
 }
-information* pop_node_and_return_info(queue** q_head)
+info* pop_node_and_return_info(queue** q_head)
 {
     queue* q_popped = (*q_head);
     for(;q_popped->next != NULL; q_popped = q_popped->next);
@@ -24,7 +25,7 @@ information* pop_node_and_return_info(queue** q_head)
     for(;q_penult->next != q_popped && q_penult != q_popped; q_penult = q_penult->next);
 
     q_penult->next = NULL;
-    information* info = q_popped->information;
+    info* info = q_popped->info;
     if(q_popped == (*q_head))
     {
         free((*q_head));
@@ -34,24 +35,24 @@ information* pop_node_and_return_info(queue** q_head)
 
     return info;
 }
-information* peek_node_and_return_info(queue** q_head)
+info* peek_node_and_return_info(queue** q_head)
 {
     queue* q_popped = (*q_head);
     for(; q_popped->next != NULL; q_popped = q_popped->next);
-    information* info = q_popped->information;
+    info* info = q_popped->info;
     return info;
 }
 
 void add(queue** q_head)
 {
-    information *info_new = malloc(sizeof(information));
+    info *info_new = malloc(sizeof(info));
     add_info(info_new);
     queue* q_new = malloc(sizeof(queue));
-    q_new->information = info_new;
+    q_new->info = info_new;
     push(q_head, &q_new);
 }
 
-void add_info(information * info_new)
+void add_info(info * info_new)
 {
 //full_name
     printf(" * Enter full name of this child (to 64 symbols):");
@@ -60,19 +61,14 @@ void add_info(information * info_new)
 //cost
     printf(" * Enter cost: ");
     info_new->cost = getlonglong(1, 9223372036854775807);
-
-//todo date
-    //printf(" * Enter year: ");
-    info_new->date.year = 1;//getlonglong(1000, 3000);
-    //printf(" * Enter month: ");
-    info_new->date.month = 1;//getlonglong(1, 12);
-    //printf(" * Enter day: ");
-    info_new->date.day = 1;//getlonglong(1, 31);
+//date
+    time_t my_time = time(NULL);
+    info_new->date = localtime(&my_time);
 }
 
 void print(ring* r_head)
 {
-    if (r_head == NULL) printf(" * There is no added clients. Try next time *\n");
+    if (r_head == NULL) printf(" * There is no added clients\n");
     else
     {
         ring* r_cycle = r_head;
@@ -89,13 +85,16 @@ void print_ring(ring* r_cycle)
     printf("    |------------------------------\n"
            "    | 1. full name: %s"
            "    | 2. cost: %lld\n"
-           "    | 3. date: \n"
-           "    |------------------------------\n", r_cycle->information->full_name, r_cycle->information->cost /*date*/);
+           "    | 3. date: %d.%d.%d\n"
+           "    | 4. time: %d:%d:%d\n"
+           "    |------------------------------\n", r_cycle->info->full_name, r_cycle->info->cost,
+           r_cycle->info->date->tm_mday, r_cycle->info->date->tm_mon + 1, r_cycle->info->date->tm_year + 1900,
+           r_cycle->info->date->tm_hour, r_cycle->info->date->tm_min, r_cycle->info->date->tm_sec);
 }
 
 void move_clients(queue** q_head, ring** r_head)
 {
-    if ((*q_head) == NULL) printf(" * Sorry, queue is empty.\n");
+    if ((*q_head) == NULL) printf(" * Sorry, queue is empty\n");
     else
     {
         int x = 0;
@@ -105,7 +104,7 @@ void move_clients(queue** q_head, ring** r_head)
             if ((*r_head) == NULL)
             {
                 (*r_head) = malloc(sizeof(ring));
-                (*r_head)->information = pop_node_and_return_info(q_head);
+                (*r_head)->info = pop_node_and_return_info(q_head);
                 (*r_head)->next = (*r_head);
                 (*r_head)->prev = (*r_head);
             }
@@ -113,7 +112,7 @@ void move_clients(queue** q_head, ring** r_head)
             else if ((*r_head)->next == (*r_head))
             {
                 ring* r_new = malloc(sizeof(ring));
-                r_new->information = pop_node_and_return_info(q_head);
+                r_new->info = pop_node_and_return_info(q_head);
 
                 (*r_head)->next = r_new;
                 (*r_head)->prev = r_new;
@@ -128,13 +127,13 @@ void move_clients(queue** q_head, ring** r_head)
 //todo сортировка элемента, который должен стать между хедом и последним
                 while(1)
                 {
-                    if(r_next->information->cost >= r_curr->information->cost)
+                    if(r_next->info->cost >= r_curr->info->cost)
                     {
-                        if(peek_node_and_return_info(q_head)->cost <= r_next->information->cost
-                        && peek_node_and_return_info(q_head)->cost >= r_curr->information->cost)
+                        if(peek_node_and_return_info(q_head)->cost <= r_next->info->cost
+                        && peek_node_and_return_info(q_head)->cost >= r_curr->info->cost)
                         {
                             ring* r_new = malloc(sizeof(ring));
-                            r_new->information = pop_node_and_return_info(q_head);
+                            r_new->info = pop_node_and_return_info(q_head);
 
                             r_new->next = r_next;
                             r_new->prev = r_curr;
@@ -147,11 +146,11 @@ void move_clients(queue** q_head, ring** r_head)
                     }
                     else
                     {
-                        if(peek_node_and_return_info(q_head)->cost <= r_next->information->cost
-                        || peek_node_and_return_info(q_head)->cost >= r_curr->information->cost)
+                        if(peek_node_and_return_info(q_head)->cost <= r_next->info->cost
+                        || peek_node_and_return_info(q_head)->cost >= r_curr->info->cost)
                         {
                             ring *r_new = malloc(sizeof(ring));
-                            r_new->information = pop_node_and_return_info(q_head);
+                            r_new->info = pop_node_and_return_info(q_head);
 
                             r_new->next = r_next;
                             r_new->prev = r_curr;
@@ -166,4 +165,5 @@ void move_clients(queue** q_head, ring** r_head)
             }
         }
     }
+    printf(" * Moving has been successful\n");
 }

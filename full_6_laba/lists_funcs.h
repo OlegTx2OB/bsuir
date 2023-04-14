@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
 #pragma once
 
@@ -10,38 +11,32 @@ enum options
     ADD = 1, MOVE_CLIENTS, PRINT, QUIT
 };
 
-typedef struct Date
-{
-    short day;
-    short month;
-    short year;
-}date;
-
-typedef struct Information
+typedef struct Info
 {
     char full_name[64];
     long long cost;
-    struct Date date;
-}information;
+    struct tm *date;
+}info;
 
 typedef struct Queue
 {
     struct Queue *next;
-    struct Information *information;
+    struct Info *info;
 }queue;
 
 typedef struct Ring
 {
     struct Ring *next;
     struct Ring *prev;
-    struct Information *information;
+    struct Info *info;
 }ring;
+
 void push(queue** q_head, queue** q_new);
-information* pop_node_and_return_info(queue** q_head);
-information* peek_node_and_return_info(queue** q_head);
+info* pop_node_and_return_info(queue** q_head);
+info* peek_node_and_return_info(queue** q_head);
 
 void add(queue** q_head);
-void add_info(information * info_new);
+void add_info(info * info_new);
 
 void print(ring* r_head);
 void print_ring(ring* r_cycle);

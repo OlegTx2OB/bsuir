@@ -1,10 +1,6 @@
 #include "lists_funcs.h"
 #include "funcs.h"
-//todo time.h и время в структуры норм добавь
-//todo вывод даты
-//todo pop при 2+
 //todo сортировку доработать
-//todo возможны ошибки из-за равно
 
 
 int main()
@@ -14,15 +10,17 @@ int main()
 
     while(1)
     {
-        printf("|-----------------------------------|\n"
-               "| 1. Add pupil to queue             |\n"
-               "| 2. Move clients from queue to ring|\n"
-               "| 3. Print all pupils from ring     |\n"
-               "| 4. Quit                           |\n"
-               "|-----------------------------------|\n");
+        printf("\t\t\t|-----------------------|------------------------------------|"
+               "-------------------------------|---------|\n"
+               "\t\t\t| 1. Add pupil to queue "
+               "| 2. Move clients from queue to ring "
+               "| 3. Print all pupils from ring "
+               "| 4. Quit |\n"
+               "\t\t\t|-----------------------|------------------------------------|"
+               "-------------------------------|---------|\n");
         short choose = getshort(1, 4);
         if (choose == ADD)add(&q_head);
-        else if (choose == MOVE_CLIENTS)move_clients(&q_head, &r_head);//todo
+        else if (choose == MOVE_CLIENTS)move_clients(&q_head, &r_head);
         else if (choose == PRINT)print(r_head);
         else if (choose == QUIT) return 0;
     }
