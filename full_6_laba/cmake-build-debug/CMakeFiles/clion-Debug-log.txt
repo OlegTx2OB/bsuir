@@ -1,4 +1,13 @@
 "E:\clion\CLion 2022.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=E:/clion/CLion 2022.3.3/bin/ninja/win/x64/ninja.exe" -G Ninja -S Z:\clion\full_6_laba -B Z:\clion\full_6_laba\cmake-build-debug
 -- Configuring done
--- Generating done
--- Build files have been written to: Z:/clion/full_6_laba/cmake-build-debug
+CMake Error at CMakeLists.txt:6 (add_executable):
+  Cannot find source file:
+
+    lists_funcs.h
+
+
+CMake Error at CMakeLists.txt:6 (add_executable):
+  No SOURCES given to target: full_6_laba
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.

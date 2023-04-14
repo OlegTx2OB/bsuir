@@ -1,5 +1,6 @@
-#include "lists_funcs.h"
+#include "options_funcs.h"
 #include "funcs.h"
+#include "structs.h"
 //todo сортировку доработать
 
 

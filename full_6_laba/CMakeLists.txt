@@ -3,4 +3,4 @@ project(full_6_laba C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(full_6_laba main.c lists_funcs.h lists_funcs.c funcs.c funcs.h)
+add_executable(full_6_laba main.c funcs.c funcs.h options_funcs.c options_funcs.h structs.h)
