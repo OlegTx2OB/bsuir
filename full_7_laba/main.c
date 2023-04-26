@@ -1,0 +1,40 @@
+#include "main_funcs.h"
+#include "struct.h"
+#include "secondary_funcs.h"
+//todo сделать трансформацию
+//todo переделать 2 children delete (работают корректно только 7 ссылок, но не 4)
+//todo не удаляется корень в дереве с детьми(34, 545, 654)
+//todo проблемы с рекурсией, которая идет из правого крыла в левое
+int main()
+{
+    node* root = NULL;
+    short nodes_count = 0;
+    while(1)
+    {
+        printf("1.NEW   2.NODES_COUNT   3.PRINT   4.SEARCH   5.UPDATE   6.TRANSFORMATION   7.REMOVE   8.QUIT\n");
+        short choose = getint(NEW, QUIT);
+
+        if(choose == NEW) new(&root, enter_number_you_want(), &nodes_count);
+        else if (choose == NODES_COUNT) printf("Nodes count is %d\n", nodes_count);
+        else if (choose == PRINT) print(root);
+        else if (choose == SEARCH)
+        {
+            if(search(root, enter_number_you_want()) == NULL) printf("Node NOT founded\n");
+            else printf("Node founded\n");
+        }
+        else if (choose == UPDATE)
+        {
+            delete(&root, enter_number_you_want(), &nodes_count);
+            new(&root, enter_number_you_want(), &nodes_count);
+        }
+        else if (choose == TRANSFORMATION)
+        {
+            int i = 1;
+            for(;powf(2, i) - 1 < nodes_count; i++);
+            if(powf(2, i) - 1 == nodes_count)transformation(&root, nodes_count, LOWER_BOUND - 1);
+            else printf("Your binary tree can't be transformed to a FULL binary tree\n");
+        }
+        else if (choose == REMOVE) delete(&root, enter_number_you_want(), &nodes_count);
+        else if (choose == QUIT)return 0;
+    }
+}
