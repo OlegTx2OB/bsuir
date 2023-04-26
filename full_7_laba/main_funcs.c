@@ -7,11 +7,11 @@ void new(node** root, int number, short* nodes_count)
 }
 void print(node* root)
 {
-    if (root)
+    if (root != NULL) //потом проверь, мб нулл убрать нужно
     {
         printf("\t%d\n", root->number);
-        print(root->left);
-        print(root->right);
+        print(root->l);
+        print(root->r);
     }
 }
 node* search(node* root, int number)
@@ -19,8 +19,8 @@ node* search(node* root, int number)
     if(root != NULL)
     {
         if (root->number == number)return root;
-        else if (number > root->number) search(root->right, number);
-        else if (number < root->number) search(root->left, number);
+        else if (number > root->number) search(root->r, number);
+        else if (number < root->number) search(root->l, number);
     }
     else return NULL;
 }
@@ -36,65 +36,64 @@ void delete(node **root, int number, short* nodes_count)
         else
         {
 //no children
-            if ((deleted_node->left == NULL) && (deleted_node->right == NULL))
+            if ((deleted_node->l == NULL) && (deleted_node->r == NULL))
             {
-                if(deleted_node->parent == NULL)
+                if(deleted_node->p == NULL)
                 {
                     free(*root);
                     (*root) = NULL;
                 }
                 else
                 {
-                    node* parent = deleted_node->parent;
-                    if(deleted_node->number > parent->number) parent->right = NULL;
-                    else parent->left = NULL;
+                    node* parent = deleted_node->p;
+                    if(deleted_node->number > parent->number) parent->r = NULL;
+                    else parent->l = NULL;
                     free(deleted_node);
                 }
                 (*nodes_count)--;
             }
-//left child
-            else if ((deleted_node->left != NULL) && (deleted_node->right == NULL))
+//l child
+            else if ((deleted_node->l != NULL) && (deleted_node->r == NULL))
             {
-                node* parent = deleted_node->parent;
-                node* child = deleted_node->left;
+                node* parent = deleted_node->p;
+                node* child = deleted_node->l;
                 delete_node_with_one_child(parent, child, deleted_node);
                 (*nodes_count)--;
             }
-//right child
-            else if ((deleted_node->left == NULL) && (deleted_node->right != NULL))
+//r child
+            else if ((deleted_node->l == NULL) && (deleted_node->r != NULL))
             {
-                node* parent = deleted_node->parent;
-                node* child = deleted_node->right;
+                node* parent = deleted_node->p;
+                node* child = deleted_node->r;
                 delete_node_with_one_child(parent, child, deleted_node);
                 (*nodes_count)--;
             }
 //two children
-            else if ((deleted_node->left != NULL) && (deleted_node->right != NULL))
+            else if ((deleted_node->l != NULL) && (deleted_node->r != NULL))
             {
-                node* parent = deleted_node->parent;
-                parent = node_for_replacement(deleted_node);
+                node* parent = node_for_replacement(deleted_node);
                 deleted_node->number = parent->number;
-                if (parent -> right == NULL) parent->parent->left = NULL;
-                else parent->parent->left = parent->right;
+                if (parent -> r == NULL) parent->p->l = NULL;
+                else parent->p->l = parent->r;
                 free(parent);
                 (*nodes_count)--;
             }
         }
     }
 }
-
-void transformation(node **root, int interval, int min_min)
+void transformation(node **root, node** new_root, int interval, int min_min)
 {
     if(interval != 0)
     {
-        int number;
         for (int i = 0; i < (interval + 1) / 2; i++)
         {
             int min_curr = UPPER_BOUND + 1;
             min_min = recursive_min_search(*root, &min_curr, min_min);
         }
-        printf("\t\t%d\n", min_min);
-        transformation(root, interval / 2, LOWER_BOUND - 1);//min_min correct
-        transformation(root, interval / 2, min_min);
+        //printf("\t\t%d\n", min_min);
+        static short new_nodes_count = 0;
+        new(new_root, min_min, &new_nodes_count);
+        transformation(root, new_root, interval / 2, LOWER_BOUND);//для левой ветки
+        transformation(root, new_root, interval / 2, min_min); //для правой ветки
     }
 }

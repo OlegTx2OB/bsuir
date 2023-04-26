@@ -4,7 +4,7 @@ void create_root(node **root, int number, short* nodes_count)
 {
     (*root) = malloc(sizeof(node));
     (*root)->number = number;
-    (*root)->parent = (*root)->left = (*root)->right = NULL;
+    (*root)->p = (*root)->l = (*root)->r = NULL;
     printf("New %hd-st node has been added\n", ++(*nodes_count));
 }
 void add_node(node* root, int number, short* nodes_count)
@@ -16,8 +16,8 @@ void add_node(node* root, int number, short* nodes_count)
     while(added_node != NULL)
     {
         parent_of_added_node = added_node;
-        if(number > added_node->number) added_node = added_node->right;
-        else if (number < added_node->number) added_node = added_node->left;
+        if(number > added_node->number) added_node = added_node->r;
+        else if (number < added_node->number) added_node = added_node->l;
         else
         {
             equality_of_nodes = 1;
@@ -29,9 +29,9 @@ void add_node(node* root, int number, short* nodes_count)
     {
         added_node = malloc(sizeof(node));
         added_node->number = number;
-        added_node->left = NULL, added_node->right = NULL, added_node->parent = parent_of_added_node;
-        if(number > parent_of_added_node->number) parent_of_added_node->right = added_node;
-        else parent_of_added_node->left = added_node;
+        added_node->l = NULL, added_node->r = NULL, added_node->p = parent_of_added_node;
+        if(number > parent_of_added_node->number) parent_of_added_node->r = added_node;
+        else parent_of_added_node->l = added_node;
 
         printf("New %hd-st node has been added\n", ++(*nodes_count));
     }
@@ -56,35 +56,35 @@ int getint(int lower_bound, int upper_bound)
 
 void delete_node_with_one_child(node* parent, node* child, node* deleted_node)
 {
-    if(deleted_node->number > parent->number) parent->right = child;
-    else parent->left = child;
+    if(deleted_node->number > parent->number) parent->r = child;
+    else parent->l = child;
     free(deleted_node);
-    child->parent = parent;
+    child->p = parent;
 }
 
 node *node_for_replacement(node *root)
 {
     node *p = root, *l = NULL;
-    if (p -> right != NULL)return find_node_with_min_number(p -> right);
+    if (p -> r != NULL)return find_node_with_min_number(p -> r);
 
-    l = p->parent;
-    while ((l != NULL) && (p == l->right))
+    l = p->p;
+    while ((l != NULL) && (p == l->r))
     {
         p = l;
-        l = l->parent;
+        l = l->p;
     }
     return l;
 }
 node *find_node_with_min_number(node *root)
 {
     node *l = root;
-    while (l->left != NULL) l = l->left;
+    while (l->l != NULL) l = l->l;
     return l;
 }
 node *find_node_with_max_number(node *root)
 {
     node *r = root;
-    while (r->right != NULL) r = r->right;
+    while (r->r != NULL) r = r->r;
     return r;
 }
 
@@ -93,8 +93,8 @@ int recursive_min_search(node *root, int* min_curr, int min_min)
     if (root)
     {
         if((root->number < (*min_curr)) && (min_min < root->number)) (*min_curr) = root->number;
-        recursive_min_search(root->left, min_curr, min_min);
-        recursive_min_search(root->right, min_curr, min_min);
+        recursive_min_search(root->l, min_curr, min_min);
+        recursive_min_search(root->r, min_curr, min_min);
     }
     return (*min_curr);
 }

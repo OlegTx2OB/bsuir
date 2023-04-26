@@ -1,9 +1,9 @@
 #pragma once
 typedef struct tree
 {
-    struct tree* parent;
-    struct tree* left;
-    struct tree* right;
+    struct tree* p;
+    struct tree* l;
+    struct tree* r;
 
     int number;
 }
