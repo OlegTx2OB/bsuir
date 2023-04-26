@@ -34,7 +34,7 @@ int main()
             node* new_root = NULL;
             if(powf(2, i) - 1 == nodes_count)
             {
-                transformation(&root, &new_root, nodes_count, LOWER_BOUND - 1);
+                transformation(&root, &new_root, nodes_count, LOWER_BOUND - 1, LOWER_BOUND - 1);
                 root = new_root;
             }
             else printf("Your binary tree can't be transformed to a FULL binary tree\n");

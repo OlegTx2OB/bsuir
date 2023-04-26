@@ -88,13 +88,13 @@ node *find_node_with_max_number(node *root)
     return r;
 }
 
-int recursive_min_search(node *root, int* min_curr, int min_min)
+int recursive_min_search(node *root, int* min_curr, int min_min, int after_right)
 {
     if (root)
     {
-        if((root->number < (*min_curr)) && (min_min < root->number)) (*min_curr) = root->number;
-        recursive_min_search(root->l, min_curr, min_min);
-        recursive_min_search(root->r, min_curr, min_min);
+        if((root->number < (*min_curr)) && (min_min < root->number) && (after_right < root->number)) (*min_curr) = root->number;
+        recursive_min_search(root->l, min_curr, min_min, after_right);
+        recursive_min_search(root->r, min_curr, min_min, after_right);
     }
     return (*min_curr);
 }

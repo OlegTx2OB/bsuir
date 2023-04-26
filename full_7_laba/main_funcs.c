@@ -81,19 +81,21 @@ void delete(node **root, int number, short* nodes_count)
         }
     }
 }
-void transformation(node **root, node** new_root, int interval, int min_min)
+void transformation(node **root, node** new_root, int interval, int min_min, int after_right)
 {
     if(interval != 0)
     {
         for (int i = 0; i < (interval + 1) / 2; i++)
         {
             int min_curr = UPPER_BOUND + 1;
-            min_min = recursive_min_search(*root, &min_curr, min_min);
+            min_min = recursive_min_search(*root, &min_curr, min_min, after_right);
         }
         //printf("\t\t%d\n", min_min);
         static short new_nodes_count = 0;
         new(new_root, min_min, &new_nodes_count);
-        transformation(root, new_root, interval / 2, LOWER_BOUND);//для левой ветки
-        transformation(root, new_root, interval / 2, min_min); //для правой ветки
+        transformation(root, new_root, interval / 2, LOWER_BOUND, after_right);//для левой ветки
+        after_right = min_min;
+        transformation(root, new_root, interval / 2, min_min, after_right); //для правой ветки
+        after_right = LOWER_BOUND - 1;
     }
 }
