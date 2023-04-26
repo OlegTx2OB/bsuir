@@ -7,7 +7,7 @@ void new(node** root, int number, short* nodes_count)
 }
 void print(node* root)
 {
-    if (root != NULL) //потом проверь, мб нулл убрать нужно
+    if (root != NULL)
     {
         printf("\t%d\n", root->number);
         print(root->l);
@@ -71,12 +71,54 @@ void delete(node **root, int number, short* nodes_count)
 //two children
             else if ((deleted_node->l != NULL) && (deleted_node->r != NULL))
             {
-                node* parent = node_for_replacement(deleted_node);
-                deleted_node->number = parent->number;
-                if (parent -> r == NULL) parent->p->l = NULL;
-                else parent->p->l = parent->r;
-                free(parent);
-                (*nodes_count)--;
+                node* node_for_replace = node_for_replacement(deleted_node->r); //хз, не факт, что работает
+                if(node_for_replace == deleted_node->r)
+                {
+//4 parent
+                    node *l = deleted_node->l;
+                    if(deleted_node == (*root))
+                    {
+                        node_for_replace->p = NULL;
+                        l->p = node_for_replace;
+                        (*root) = node_for_replace;
+                    }
+                    else
+                    {
+                        node *p = deleted_node->p;
+                        node_for_replace->p = p;
+                        l->p = node_for_replace;
+                        if(p->number > node_for_replace->number)p->l = node_for_replace;
+                        else p->r = node_for_replace;
+                    }
+                    (*nodes_count)--;
+                    node_for_replace->l = l;
+                }
+//7
+                else
+                {
+                    node* l = deleted_node->l;
+                    node* p_for_replace = node_for_replace->p;
+                    node* r = deleted_node->r;
+                    if(deleted_node == (*root))
+                    {
+                        node_for_replace->p = NULL;
+                        (*root) = node_for_replace;
+                    }
+                    else
+                    {
+                        node* p_del = deleted_node->p;
+                        if(p_del->number > node_for_replace->number)p_del->l = node_for_replace;
+                        else p_del->r = node_for_replace;
+                        node_for_replace->p = p_del;
+                    }
+                    p_for_replace->l = NULL;
+                    r->p = node_for_replace;
+                    l->p = node_for_replace;
+                    node_for_replace->r = r;
+                    node_for_replace->l = l;
+                    (*nodes_count)--;
+                }
+                free(deleted_node);
             }
         }
     }

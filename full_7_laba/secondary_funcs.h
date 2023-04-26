@@ -15,10 +15,6 @@ int getint(int lower_bound, int upper_bound);
 
 void delete_node_with_one_child(node** root, node* parent, node* child, node* deleted_node);
 
-node *node_for_replacement(node *root);
-
-node *find_node_with_min_number(node *root);
-node *find_node_with_max_number(node *root);
-
+node *node_for_replacement(node *node_for_replace);
 void free_old_tree(node** root);
 int recursive_min_search(node *root, int* min_curr, int min_min, int after_right);

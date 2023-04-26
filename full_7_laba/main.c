@@ -1,7 +1,7 @@
 #include "main_funcs.h"
 #include "struct.h"
 #include "secondary_funcs.h"
-//todo переделать 2 children delete (работают корректно только 7 ссылок, но не 4)
+
 int main()
 {
     node* root = NULL;

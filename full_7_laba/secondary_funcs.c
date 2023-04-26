@@ -63,32 +63,11 @@ void delete_node_with_one_child(node** root, node* parent, node* child, node* de
     child->p = parent;
 }
 
-node *node_for_replacement(node *root)
+node *node_for_replacement(node *node_for_replace)
 {
-    node *p = root, *l = NULL;
-    if (p -> r != NULL)return find_node_with_min_number(p -> r);
-
-    l = p->p;
-    while ((l != NULL) && (p == l->r))
-    {
-        p = l;
-        l = l->p;
-    }
-    return l;
+    while(node_for_replace->l != NULL) node_for_replace = node_for_replace->l;
+    return node_for_replace;
 }
-node *find_node_with_min_number(node *root)
-{
-    node *l = root;
-    while (l->l != NULL) l = l->l;
-    return l;
-}
-node *find_node_with_max_number(node *root)
-{
-    node *r = root;
-    while (r->r != NULL) r = r->r;
-    return r;
-}
-
 void free_old_tree(node** root)
 {
     if (*root)
@@ -100,7 +79,6 @@ void free_old_tree(node** root)
         (*root) = NULL;
     }
 }
-
 int recursive_min_search(node *root, int* min_curr, int min_min, int after_right)
 {
     if (root)
