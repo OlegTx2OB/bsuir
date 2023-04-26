@@ -89,6 +89,18 @@ node *find_node_with_max_number(node *root)
     return r;
 }
 
+void free_old_tree(node** root)
+{
+    if (*root)
+    {
+        free_old_tree(&(*root)->l);
+        free_old_tree(&(*root)->r);
+
+        free(*root);
+        (*root) = NULL;
+    }
+}
+
 int recursive_min_search(node *root, int* min_curr, int min_min, int after_right)
 {
     if (root)

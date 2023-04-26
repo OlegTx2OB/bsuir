@@ -20,4 +20,5 @@ node *node_for_replacement(node *root);
 node *find_node_with_min_number(node *root);
 node *find_node_with_max_number(node *root);
 
+void free_old_tree(node** root);
 int recursive_min_search(node *root, int* min_curr, int min_min, int after_right);

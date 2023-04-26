@@ -90,7 +90,6 @@ void transformation(node **root, node** new_root, int interval, int min_min, int
             int min_curr = UPPER_BOUND + 1;
             min_min = recursive_min_search(*root, &min_curr, min_min, after_right);
         }
-        //printf("\t\t%d\n", min_min);
         static short new_nodes_count = 0;
         new(new_root, min_min, &new_nodes_count);
         transformation(root, new_root, interval / 2, LOWER_BOUND, after_right);//для левой ветки

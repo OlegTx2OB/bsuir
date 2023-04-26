@@ -2,7 +2,6 @@
 #include "struct.h"
 #include "secondary_funcs.h"
 //todo переделать 2 children delete (работают корректно только 7 ссылок, но не 4)
-//todo очистить все хвосты
 int main()
 {
     node* root = NULL;
@@ -33,6 +32,7 @@ int main()
             if(powf(2, i) - 1 == nodes_count)
             {
                 transformation(&root, &new_root, nodes_count, LOWER_BOUND - 1, LOWER_BOUND - 1);
+                free_old_tree(&root);
                 root = new_root;
             }
             else printf("Your binary tree can't be transformed to a FULL binary tree\n");
