@@ -57,7 +57,7 @@ void delete(node **root, int number, short* nodes_count)
             {
                 node* parent = deleted_node->p;
                 node* child = deleted_node->l;
-                delete_node_with_one_child(parent, child, deleted_node);
+                delete_node_with_one_child(root, parent, child, deleted_node);
                 (*nodes_count)--;
             }
 //r child
@@ -65,7 +65,7 @@ void delete(node **root, int number, short* nodes_count)
             {
                 node* parent = deleted_node->p;
                 node* child = deleted_node->r;
-                delete_node_with_one_child(parent, child, deleted_node);
+                delete_node_with_one_child(root, parent, child, deleted_node);
                 (*nodes_count)--;
             }
 //two children

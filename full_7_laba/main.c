@@ -1,10 +1,8 @@
 #include "main_funcs.h"
 #include "struct.h"
 #include "secondary_funcs.h"
-//todo сделать трансформацию
 //todo переделать 2 children delete (работают корректно только 7 ссылок, но не 4)
-//todo не удаляется корень в дереве с детьми(34, 545, 654)
-//todo проблемы с рекурсией, которая идет из правого крыла в левое
+//todo очистить все хвосты
 int main()
 {
     node* root = NULL;

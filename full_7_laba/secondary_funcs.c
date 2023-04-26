@@ -54,10 +54,11 @@ int getint(int lower_bound, int upper_bound)
     return d;
 }
 
-void delete_node_with_one_child(node* parent, node* child, node* deleted_node)
+void delete_node_with_one_child(node** root, node* parent, node* child, node* deleted_node)
 {
-    if(deleted_node->number > parent->number) parent->r = child;
-    else parent->l = child;
+    if (parent && deleted_node->number > parent->number) parent->r = child;
+    else if (parent) parent->l = child;
+    else (*root) = child;
     free(deleted_node);
     child->p = parent;
 }

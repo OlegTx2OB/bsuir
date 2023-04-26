@@ -13,7 +13,7 @@ void add_node(node* root, int number, short* nodes_count);
 int enter_number_you_want();
 int getint(int lower_bound, int upper_bound);
 
-void delete_node_with_one_child(node* parent, node* child, node* deleted_node);
+void delete_node_with_one_child(node** root, node* parent, node* child, node* deleted_node);
 
 node *node_for_replacement(node *root);
 
