@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "z:/clion/full_6_laba/cmake-build-debug"
+			"value" : "c:/Users/\u041e\u043b\u0435\u0433/Documents/GitHub/c/full_6_laba/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -431,7 +431,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/clion/full_6_laba/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/\u041e\u043b\u0435\u0433/Documents/GitHub/c/full_6_laba/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -503,7 +503,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "Z:/clion/full_6_laba"
+			"value" : "C:/Users/\u041e\u043b\u0435\u0433/Documents/GitHub/c/full_6_laba"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1131,7 +1131,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/clion/full_6_laba/cmake-build-debug"
+			"value" : "C:/Users/\u041e\u043b\u0435\u0433/Documents/GitHub/c/full_6_laba/cmake-build-debug"
 		},
 		{
 			"name" : "full_6_laba_IS_TOP_LEVEL",
@@ -1155,7 +1155,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/clion/full_6_laba"
+			"value" : "C:/Users/\u041e\u043b\u0435\u0433/Documents/GitHub/c/full_6_laba"
 		}
 	],
 	"kind" : "cache",

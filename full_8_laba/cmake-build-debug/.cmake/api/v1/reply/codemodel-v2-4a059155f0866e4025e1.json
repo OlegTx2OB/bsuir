@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "full_6_laba",
+					"name" : "full_8_laba",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "full_6_laba::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-full_6_laba-Debug-8b41bab1c9d19ba41d84.json",
-					"name" : "full_6_laba",
+					"id" : "full_8_laba::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-full_8_laba-Debug-d358afe2438376cff803.json",
+					"name" : "full_8_laba",
 					"projectIndex" : 0
 				}
 			]
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "Z:/clion/full_6_laba/cmake-build-debug",
-		"source" : "Z:/clion/full_6_laba"
+		"build" : "Z:/clion/full_8_laba/cmake-build-debug",
+		"source" : "Z:/clion/full_8_laba"
 	},
 	"version" : 
 	{

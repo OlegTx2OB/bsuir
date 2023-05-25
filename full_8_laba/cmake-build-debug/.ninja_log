@@ -1,0 +1,25 @@
+# ninja log v5
+788	884	7067360663266783	full_8_laba.exe	7ca0d2a110f743b
+3	787	7067360662281247	CMakeFiles/full_8_laba.dir/main_funcs.c.obj	bd67ca1193463526
+3	676	7067360356040896	CMakeFiles/full_8_laba.dir/main.c.obj	1b9877a0398cbfa2
+9	671	7067360356000795	CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj	d6573ff2e6759a06
+1	213	7067361657005016	build.ninja	10b9b0be680d23ae
+14	737	7067065227248671	CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj	86ea0810c9e5c5e3
+2	849	7067269748194697	CMakeFiles/full_8_laba.dir/hashing.c.obj	9f1836d646b424aa
+3	720	7067379483567003	CMakeFiles/full_8_laba.dir/main.c.obj	1b9877a0398cbfa2
+20	725	7067379483668501	CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj	86ea0810c9e5c5e3
+15	752	7067379483814562	CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj	d6573ff2e6759a06
+12	769	7067379484093694	CMakeFiles/full_8_laba.dir/main_funcs.c.obj	bd67ca1193463526
+769	878	7067379485195403	full_8_laba.exe	c69955bfce45a139
+2	652	7067382759441039	CMakeFiles/full_8_laba.dir/main.c.obj	1b9877a0398cbfa2
+6	657	7067382759481942	CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj	d6573ff2e6759a06
+657	752	7067382760451707	full_8_laba.exe	c69955bfce45a139
+14	674	7067417018134781	CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj	86ea0810c9e5c5e3
+3	680	7067417018169609	CMakeFiles/full_8_laba.dir/main.c.obj	1b9877a0398cbfa2
+8	686	7067417018179742	CMakeFiles/full_8_laba.dir/main_funcs.c.obj	bd67ca1193463526
+10	691	7067417018250722	CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj	d6573ff2e6759a06
+691	810	7067417019515820	full_8_laba.exe	c69955bfce45a139
+2	828	7067417763385028	CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj	86ea0810c9e5c5e3
+828	944	7067417764578403	full_8_laba.exe	c69955bfce45a139
+2	829	7067418067807065	CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj	86ea0810c9e5c5e3
+830	907	7067418068603654	full_8_laba.exe	c69955bfce45a139
