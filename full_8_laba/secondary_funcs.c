@@ -1,23 +1,13 @@
 #include "secondary_funcs.h"
 
-short hash_calculation(char* buf)
+char* key_generate()
 {
-    int hash = 0;
-    for(int j = 0; j < strlen(buf); j++)hash += buf[j] * j;
-    return (hash % MAX_ARRAY_SIZE);
+    srand(time(NULL));
+    char* key = malloc(KEY_SIZE * sizeof(char));
+    for(int i = 0; i < KEY_SIZE - 1; i++)key[i] = rand() % 94 + 32;
+    key[KEY_SIZE - 1] = '\0';
+    return key;
 }
-
-int getint(int lower_bound, int upper_bound)
-{
-    int d;
-    while (!scanf("%d", &d) || d < lower_bound || d > upper_bound || getchar() != '\n')
-    {
-        printf("invalid input\n");
-        rewind(stdin);
-    }
-    return d;
-}
-
 array** create_hash_array()
 {
     array** hash_table = malloc(MAX_ARRAY_SIZE * sizeof(array*));
@@ -33,85 +23,38 @@ list* create_cache_list()
 {
     list* cache_list = malloc(sizeof(list));
     cache_list->head = cache_list->tail = NULL;
-    cache_list->size = 0;
     return cache_list;
 }
 
-void swap(unsigned char *a, unsigned char *b)
+short dns_is_not_exists_in_cache(list* cache_list, char* dns)
 {
-    unsigned char temp = *a;
-    *a = *b;
-    *b = temp;
+    cache_struct* node = cache_list->head;
+    for(;cache_list->head && node != NULL;node = node->next)if(strcmp(dns, node->dns) == 0) return 0;
+    return 1;
+}
+unsigned short hash_calculation(char* dns, char* key)
+{
+    unsigned long hash = 0;
+
+    for(int i = 0; i < strlen(dns); i++)hash += dns[i] * i + key[i];
+    return (hash % MAX_ARRAY_SIZE);
 }
 
-void rc4(unsigned char *key, unsigned char *data)
+int getint(int lower_bound, int upper_bound)
 {
-    int length = strlen(data);
-
-    unsigned char s[256];
-    int i, j = 0;
-
-    for (i = 0; i < 256; i++) s[i] = i;
-
-    for (i = 0; i < 256; i++)
+    int d;
+    while (!scanf("%d", &d) || d < lower_bound || d > upper_bound || getchar() != '\n')
     {
-        j = (j + s[i] + key[i % strlen(key)]) % 256;
-        swap(&s[i], &s[j]);
+        printf("invalid input\n");
+        rewind(stdin);
     }
-
-    i = j = 0;
-    for (int k = 0; k < length; k++)
-    {
-        i = (i + 1) % 256;
-        j = (j + s[i]) % 256;
-        swap(&s[i], &s[j]);
-        int t = (s[i] + s[j]) % 256;
-        data[k] ^= s[t];
-    }
+    return d;
 }
 
-//void* popFront(list *list)
-//{
-//    cache_node *prev;
-//    void *tmp;
-//    if (list->head == NULL) exit(2);
-//
-//    prev = list->head;
-//    list->head = list->head->next;
-//    if (list->head) list->head->prev = NULL;
-//    if (prev == list->tail) list->tail = NULL;
-//    tmp = prev->value;
-//    free(prev);
-//
-//    return tmp;
-//}
-
-
-//void pushBack(list *list, void *value)
-//{
-//    cache_node *tmp = malloc(sizeof(cache_node));
-//    if (tmp == NULL) exit(3);
-//    tmp->value = value;
-//    tmp->next = NULL;
-//    tmp->prev = list->tail;
-//    if (list->tail) list->tail->next = tmp;
-//    list->tail = tmp;
-//
-//    if (list->head == NULL) list->head = tmp;
-//}
-
-//void* popBack(list *list)
-//{
-//    cache_node *next;
-//    void *tmp;
-//    if (list->tail == NULL) exit(4);
-//
-//    next = list->tail;
-//    list->tail = list->tail->prev;
-//    if (list->tail) list->tail->next = NULL;
-//    if (next == list->head) list->head = NULL;
-//    tmp = next->value;
-//    free(next);
-//
-//    return tmp;
-//}
+char* enter_your_dns()
+{
+    unsigned char* dns = malloc(SIZEOF_BUF * sizeof(char));
+    printf("Enter your dns: ");
+    fgets(dns, SIZEOF_BUF,stdin);
+    return dns;
+}

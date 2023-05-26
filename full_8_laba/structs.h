@@ -3,29 +3,28 @@
 typedef struct cache
 {
     char* dns;
-    char* ip;
+    int ip;
 
     struct cache* next;
     struct cache* prev;
-}cache;
+}cache_struct;
 
 typedef struct
 {
-    int size;
-    cache* head;
-    cache* tail;
+    cache_struct* head;
+    cache_struct* tail;
 }list;
 
 typedef struct hash
 {
-    cache** node;
+    cache_struct** node;
 
     struct hash* next;
     struct hash* prev;
-}hash;
+}hash_struct;
 
 typedef struct
 {
-    hash* head;
-    hash* tail;
+    hash_struct* head;
+    hash_struct* tail;
 }array;

@@ -67,8 +67,8 @@ build CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj: C_COMPILER__full_8_laba_
   OBJECT_DIR = CMakeFiles\full_8_laba.dir
   OBJECT_FILE_DIR = CMakeFiles\full_8_laba.dir
 
-build CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj: C_COMPILER__full_8_laba_Debug Z$:/clion/full_8_laba/work_with_nodes.c || cmake_object_order_depends_target_full_8_laba
-  DEP_FILE = CMakeFiles\full_8_laba.dir\work_with_nodes.c.obj.d
+build CMakeFiles/full_8_laba.dir/funcs_with_nodes.c.obj: C_COMPILER__full_8_laba_Debug Z$:/clion/full_8_laba/funcs_with_nodes.c || cmake_object_order_depends_target_full_8_laba
+  DEP_FILE = CMakeFiles\full_8_laba.dir\funcs_with_nodes.c.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu11
   OBJECT_DIR = CMakeFiles\full_8_laba.dir
   OBJECT_FILE_DIR = CMakeFiles\full_8_laba.dir
@@ -81,7 +81,7 @@ build CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj: C_COMPILER__full_8_laba_
 #############################################
 # Link the executable full_8_laba.exe
 
-build full_8_laba.exe: C_EXECUTABLE_LINKER__full_8_laba_Debug CMakeFiles/full_8_laba.dir/main.c.obj CMakeFiles/full_8_laba.dir/main_funcs.c.obj CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj CMakeFiles/full_8_laba.dir/work_with_nodes.c.obj
+build full_8_laba.exe: C_EXECUTABLE_LINKER__full_8_laba_Debug CMakeFiles/full_8_laba.dir/main.c.obj CMakeFiles/full_8_laba.dir/main_funcs.c.obj CMakeFiles/full_8_laba.dir/secondary_funcs.c.obj CMakeFiles/full_8_laba.dir/funcs_with_nodes.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\full_8_laba.dir
